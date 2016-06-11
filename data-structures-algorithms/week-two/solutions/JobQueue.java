@@ -38,6 +38,7 @@ public class JobQueue {
         // build heap
         ////  if worker[0].jobRuntime == elapsedTime
         ////    remove worker[0]
+        ////    freeWorkers++
         ////  else
         ////    break
         ////  elapsedTime++
