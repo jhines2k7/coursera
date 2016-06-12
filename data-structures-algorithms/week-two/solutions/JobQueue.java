@@ -11,6 +11,17 @@ public class JobQueue {
     private FastScanner in;
     private PrintWriter out;
 
+    public class Worker {
+        private int id;
+	private int jobId;
+	private int jobDuration;
+
+	public Worker(int id, int duration) {
+	    
+	}
+	
+    }
+
     public static void main(String[] args) throws IOException {
         new JobQueue().solve();
     }
@@ -32,7 +43,10 @@ public class JobQueue {
 
     private void assignJobs() {
         int freeWorkers = numWorkers;
-        
+        bool finishedProcessingJobs = false;
+	while(!finishedProcessingJobs){
+	
+	}
         // while !finishedProcessingJobs
         // assign jobs to free workers
         // build heap
