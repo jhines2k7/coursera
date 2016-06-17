@@ -4,7 +4,6 @@ import java.util.StringTokenizer;
 public class JobQueue {
     private int numWorkers;
     private int[] jobs;
-    private Worker[] workers;
 
     private int[] assignedWorker;
     private long[] startTime;
@@ -13,39 +12,14 @@ public class JobQueue {
     private PrintWriter out;
 
     public class Worker {
-        private int workerId;
-        private int jobId;
-        private int jobDuration;
+        private int id;
+	private int jobId;
+	private int jobDuration;
 
-        public Worker(int workerId, int jobId, int duration) {
-            this.workerId = workerId;
-            this.jobId = jobId;
-            this.jobDuration = duration;
-        }
-
-        public int getWorkerId() {
-            return workerId;
-        }
-
-        public void setWorkerId(int workerId) {
-            this.workerId = workerId;
-        }
-
-        public int getJobId() {
-            return jobId;
-        }
-
-        public void setJobId(int jobId) {
-            this.jobId = jobId;
-        }
-
-        public int getJobDuration() {
-            return jobDuration;
-        }
-
-        public void setJobDuration(int jobDuration) {
-            this.jobDuration = jobDuration;
-        }
+	public Worker(int id, int duration) {
+	    
+	}
+	
     }
 
     public static void main(String[] args) throws IOException {
@@ -67,97 +41,7 @@ public class JobQueue {
         }
     }
 
-    private void buildHeap() {
-        for (int i = (int)Math.floor(workers.length / 2); i >= 0; i--) {
-            siftDown(i);
-        }
-    }
-
-    private int leftChild(int i) {
-        return 2 * i + 1;
-    }
-
-    private int rightChild(int i) {
-        return 2 * i + 2;
-    }
-
-    private void changePriority(int i, Worker worker) {
-
-    }
-
-    private void siftUp(int i) {
-
-    }
-
-    private void siftDown(int i) {
-        int maxIndex = i, l, r;
-
-        l = leftChild(i);
-
-        if(l < workers.length && workers[l].jobDuration < workers[maxIndex].jobDuration) {
-            maxIndex = l;
-        }
-
-        r = rightChild(i);
-
-        if(r < workers.length && workers[r].jobDuration < workers[maxIndex].jobDuration) {
-            maxIndex = r;
-        }
-
-        if(i != maxIndex) {
-            Worker temp = workers[i];
-            workers[i] = workers[maxIndex];
-            workers[maxIndex] = temp;
-
-            siftDown(maxIndex);
-        }
-    }
-
     private void assignJobs() {
-       // Boolean finishedProcessingJobs = false, freeWorkers = false;
-
-	    Worker[] workers = new Worker[numWorkers];
-
-        for(int i = 0; i < numWorkers; i++) {
-            workers[i] = new Worker(i, i, jobs[i]);
-            assignedWorker[i] = workers[i].workerId;
-            startTime[i] = 0;
-        }
-
-        buildHeap();
-
-        int elapsedTime = 0, processedJobs = numWorkers;
-
-        while(true){
-            while(true) {
-                if(workers[0].jobDuration == elapsedTime) {
-                    processedJobs++;
-                    workers[0].jobDuration = jobs[processedJobs];
-                    workers[0].jobId = processedJobs;
-
-                    assignedWorker[processedJobs] = workers[0].workerId;
-                    startTime[processedJobs] = elapsedTime;
-                } else {
-                    break;
-                }
-            }
-
-            elapsedTime++;
-
-            if(processedJobs == jobs.length) {
-                break;
-            }
-	    }
-        // while !finishedProcessingJobs
-        // assign jobs to free workers
-        // build heap
-        ////  if worker[0].jobRuntime == elapsedTime
-        ////    remove worker[0]
-        ////    freeWorkers++
-        ////  else
-        ////    break
-        ////  elapsedTime++
-
         // TODO: replace this code with a faster algorithm.
         assignedWorker = new int[jobs.length];
         startTime = new long[jobs.length];
