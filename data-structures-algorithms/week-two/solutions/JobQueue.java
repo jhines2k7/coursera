@@ -80,7 +80,7 @@ public class JobQueue {
     }
 
     private void buildHeap() {
-        for(int i = (int)Math.floor(numWorkers/2); i > 1; i--) {
+        for(int i = (int)Math.floor(numWorkers / 2); i > 0; i--) {
             siftDown(i);
         }
     }
@@ -110,20 +110,22 @@ public class JobQueue {
 
         l = leftChild(i);
 
-        if(l < numWorkers && workers[l].nextFreeTime < workers[maxIndex].nextFreeTime) {
+        if(l <= numWorkers && workers[l - 1].nextFreeTime < workers[maxIndex - 1].nextFreeTime) {
             maxIndex = l;
         }
 
         r = rightChild(i);
 
-        if(r < numWorkers && workers[r].nextFreeTime < workers[maxIndex].nextFreeTime) {
+        if(r <= numWorkers && workers[r - 1].nextFreeTime < workers[maxIndex - 1].nextFreeTime) {
             maxIndex = r;
         }
 
         if(i != maxIndex) {
-            Worker temp = workers[maxIndex];
-            workers[maxIndex] = workers[i];
-            workers[i] = temp;
+            Worker temp = workers[maxIndex - 1];
+            workers[maxIndex - 1] = workers[i - 1];
+            workers[i - 1] = temp;
+
+            siftDown(maxIndex);
         }
     }
 
@@ -133,6 +135,10 @@ public class JobQueue {
         assignedWorker = new int[jobs.length];
         startTime = new long[jobs.length];
         long[] nextFreeTime = new long[numWorkers];
+
+        for (int j = 0; j < numWorkers; j++) {
+            workers[j] = new Worker(j, jobs[j], j);
+        }
 
         buildHeap();
 
